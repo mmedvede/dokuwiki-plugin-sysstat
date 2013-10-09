@@ -1,0 +1,21 @@
+.sysstat {
+  color: #777;
+  width: 100%;
+  display: block;
+  font-size: 87.5%;
+  text-align: center;
+  background: #dfd;
+}
+
+.sysstat_part {
+  float: left;
+  padding: 0px 5px;
+}
+
+.syspages {
+  background: #ddf;
+}
+
+.sysmedia {
+  background: #fdd;
+}
