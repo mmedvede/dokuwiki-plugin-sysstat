@@ -6,4 +6,3 @@
  */
 
 $conf['dokuwiki_basedir']    = '/var/www/dokuwiki';
-$conf['dokuwiki_partition']    = '/dev/sda1';
