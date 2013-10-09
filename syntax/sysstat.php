@@ -68,10 +68,11 @@ class syntax_plugin_sysstat_sysstat extends DokuWiki_Syntax_Plugin {
      */
     public function render($mode, &$renderer, $data) {
         if($mode != 'xhtml'){
-            $basepath = '~/dokuwiki/data';
+            $basepath = $this->getConf('dokuwiki_basedir') . '/data';
+            $part = getConf('dokuwiki_partition');
 
-            $freeb = $this->_freespace('/dev/sda1');
-            $freeh = $this->_freespaceh('/dev/sda1');
+            $freeb = $this->_freespace($part);
+            $freeh = $this->_freespaceh($part);
             $pagesb = $this->_dirsize($basepath . '/pages');
             $pagesh = $this->_dirsizeh($basepath . '/pages');
             $mediab = $this->_dirsize($basepath . '/media');
