@@ -5,4 +5,5 @@
  * @author Mikhail Medvedev <mmedvede@cs.uml.edu>
  */
 
-//$conf['fixme']    = 'FIXME';
+$conf['dokuwiki_basedir']    = '/var/www/dokuwiki';
+$conf['dokuwiki_partition']    = '/dev/sda1';

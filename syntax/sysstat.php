@@ -14,19 +14,19 @@ class syntax_plugin_sysstat_sysstat extends DokuWiki_Syntax_Plugin {
      * @return string Syntax mode type
      */
     public function getType() {
-        return 'FIXME: container|baseonly|formatting|substition|protected|disabled|paragraphs';
+        return 'substition';
     }
     /**
      * @return string Paragraph type
      */
     public function getPType() {
-        return 'FIXME: normal|block|stack';
+        return 'normal';
     }
     /**
      * @return int Sort order - Low numbers go before high numbers
      */
     public function getSort() {
-        return FIXME;
+        return 100;
     }
 
     /**
@@ -35,13 +35,13 @@ class syntax_plugin_sysstat_sysstat extends DokuWiki_Syntax_Plugin {
      * @param string $mode Parser mode
      */
     public function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('<FIXME>',$mode,'plugin_sysstat_sysstat');
-//        $this->Lexer->addEntryPattern('<FIXME>',$mode,'plugin_sysstat_sysstat');
+        $this->Lexer->addSpecialPattern('~~SYSSTAT~~',$mode,'plugin_sysstat_sysstat');
+        //        $this->Lexer->addEntryPattern('<FIXME>',$mode,'plugin_sysstat_sysstat');
     }
 
-//    public function postConnect() {
-//        $this->Lexer->addExitPattern('</FIXME>','plugin_sysstat_sysstat');
-//    }
+    //    public function postConnect() {
+    //        $this->Lexer->addExitPattern('</FIXME>','plugin_sysstat_sysstat');
+    //    }
 
     /**
      * Handle matches of the sysstat syntax
@@ -67,9 +67,67 @@ class syntax_plugin_sysstat_sysstat extends DokuWiki_Syntax_Plugin {
      * @return bool If rendering was successful.
      */
     public function render($mode, &$renderer, $data) {
-        if($mode != 'xhtml') return false;
+        if($mode != 'xhtml'){
+            $basepath = '~/dokuwiki/data';
 
-        return true;
+            $freeb = $this->_freespace('/dev/sda1');
+            $freeh = $this->_freespaceh('/dev/sda1');
+            $pagesb = $this->_dirsize($basepath . '/pages');
+            $pagesh = $this->_dirsizeh($basepath . '/pages');
+            $mediab = $this->_dirsize($basepath . '/media');
+            $mediah = $this->_dirsizeh($basepath . '/media');
+
+            $totalb = $freeb + $pagesb + $mediab;
+
+            $doc = '<div class="sysstat">';
+
+            $doc .= '<div class="sysstat_part syspages" style="min-width:' . ($pagesb / $totalb *100 ) . '%">';
+            $doc .= $pagesh . ' text';
+            $doc .= '</div>';
+
+            $doc .= '<div class="sysstat_part sysmedia" style="min-width:' . ($mediab / $totalb *100 ) . '%">';
+            $doc .= $mediah . ' media';
+            $doc .= '</div>';
+
+            $doc .= $freeh . ' free';
+            $doc .= '</div>';
+
+            $renderer->doc .=$doc;
+
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /*
+     * Directory size in bytes
+     */
+    function _dirsize($dir, $opt = '-sb'){
+        return shell_exec('du '. $opt .' '. $dir .' | cut -f1');
+    }
+    /*
+     * Human readable
+     */
+    function _dirsizeh($dir){
+        return $this->_dirsize($dir, '-sh');
+    }
+
+    /*
+     * Partition free space in bytes
+     */
+    function _freespace($partition, $opt = '-B1'){
+        $free = shell_exec('df '.$opt.' '. $partition .' | tail -n1');
+        $free = preg_replace('/\s+/', ' ', $free);
+        $free = explode(' ',$free);
+        return $free[3];
+    }
+    /*
+     * Human readable
+     */
+    function _freespaceh($partition){
+        return $this->_freespace($partition, '-h');
     }
 }
 
