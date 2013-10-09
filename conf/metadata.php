@@ -6,4 +6,4 @@
  */
 
 
-$meta['dokuwiki_basedir'] = array('string');
+//$meta['dokuwiki_basedir'] = array('string');

@@ -71,14 +71,16 @@ class syntax_plugin_sysstat_sysstat extends DokuWiki_Syntax_Plugin {
             return false;
         }
 
-        $basepath = $this->getConf('dokuwiki_basedir') . '/data';
+        global $conf;
 
-        $freeb = $this->_freespace($basepath);
-        $freeh = $this->_freespaceh($basepath);
-        $pagesb = $this->_dirsize($basepath . '/pages');
-        $pagesh = $this->_dirsizeh($basepath . '/pages');
-        $mediab = $this->_dirsize($basepath . '/media');
-        $mediah = $this->_dirsizeh($basepath . '/media');
+        $datadir = $conf['datadir'];
+        $mediadir =$conf['mediadir'];
+        $freeb = $this->_freespace($datadir);
+        $freeh = $this->_freespaceh($datadir);
+        $pagesb = $this->_dirsize($datadir);
+        $pagesh = $this->_dirsizeh($datadir);
+        $mediab = $this->_dirsize($mediadir);
+        $mediah = $this->_dirsizeh($mediadir);
 
         $totalb = $freeb + $pagesb + $mediab;
 
