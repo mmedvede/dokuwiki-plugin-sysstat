@@ -68,37 +68,37 @@ class syntax_plugin_sysstat_sysstat extends DokuWiki_Syntax_Plugin {
      */
     public function render($mode, &$renderer, $data) {
         if($mode != 'xhtml'){
-            $basepath = $this->getConf('dokuwiki_basedir') . '/data';
-            $part = getConf('dokuwiki_partition');
-
-            $freeb = $this->_freespace($part);
-            $freeh = $this->_freespaceh($part);
-            $pagesb = $this->_dirsize($basepath . '/pages');
-            $pagesh = $this->_dirsizeh($basepath . '/pages');
-            $mediab = $this->_dirsize($basepath . '/media');
-            $mediah = $this->_dirsizeh($basepath . '/media');
-
-            $totalb = $freeb + $pagesb + $mediab;
-
-            $doc = '<div class="sysstat">';
-
-            $doc .= '<div class="sysstat_part syspages" style="min-width:' . ($pagesb / $totalb *100 ) . '%">';
-            $doc .= $pagesh . ' text';
-            $doc .= '</div>';
-
-            $doc .= '<div class="sysstat_part sysmedia" style="min-width:' . ($mediab / $totalb *100 ) . '%">';
-            $doc .= $mediah . ' media';
-            $doc .= '</div>';
-
-            $doc .= $freeh . ' free';
-            $doc .= '</div>';
-
-            $renderer->doc .=$doc;
-
-            return true;
+            return false;
         }
 
-        return false;
+        $basepath = $this->getConf('dokuwiki_basedir') . '/data';
+        $part = getConf('dokuwiki_partition');
+
+        $freeb = $this->_freespace($part);
+        $freeh = $this->_freespaceh($part);
+        $pagesb = $this->_dirsize($basepath . '/pages');
+        $pagesh = $this->_dirsizeh($basepath . '/pages');
+        $mediab = $this->_dirsize($basepath . '/media');
+        $mediah = $this->_dirsizeh($basepath . '/media');
+
+        $totalb = $freeb + $pagesb + $mediab;
+
+        $doc = '<div class="sysstat">';
+
+        $doc .= '<div class="sysstat_part syspages" style="min-width:' . ($pagesb / $totalb *100 ) . '%">';
+        $doc .= $pagesh . ' text';
+        $doc .= '</div>';
+
+        $doc .= '<div class="sysstat_part sysmedia" style="min-width:' . ($mediab / $totalb *100 ) . '%">';
+        $doc .= $mediah . ' media';
+        $doc .= '</div>';
+
+        $doc .= $freeh . ' free';
+        $doc .= '</div>';
+
+        $renderer->doc .=$doc;
+
+        return true;
     }
 
 
