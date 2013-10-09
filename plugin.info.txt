@@ -1,0 +1,7 @@
+base   sysstat
+author Mikhail Medvedev
+email  mmedvede@cs.uml.edu
+date   2013-10-09
+name   sysstat plugin
+desc   System Stats
+url    http://github.com/mmedvede
