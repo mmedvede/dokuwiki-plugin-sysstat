@@ -72,7 +72,7 @@ class syntax_plugin_sysstat_sysstat extends DokuWiki_Syntax_Plugin {
         }
 
         $basepath = $this->getConf('dokuwiki_basedir') . '/data';
-        $part = getConf('dokuwiki_partition');
+        $part = $this->getConf('dokuwiki_partition');
 
         $freeb = $this->_freespace($part);
         $freeh = $this->_freespaceh($part);
